@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import './Login.css';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-import { auth } from "./firebase";
+import { FBAuth } from './firebase'
+
 
 function Login() {
     const history = useNavigate();
@@ -12,7 +13,7 @@ function Login() {
     const signIn = e => {
         e.preventdefualt();
        
-        auth
+        FBAuth
             .signInWithEmailAndPassword(email, password)
             .auth(auth => {
                 history.push('/')
@@ -24,7 +25,7 @@ function Login() {
     const register = e => {
         e.preventdefualt();
 
-        auth
+        FBAuth
             .createUserwithEmailAndPassword(email, password)
             .the((auth) => {
                 //     it successfully created a new user with  email and password.

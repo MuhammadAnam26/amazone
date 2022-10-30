@@ -13,6 +13,7 @@ function Header() {
         <img
           className="header__logo"
           src="http://pngimg.com/uploads/amazon/amazon_PNG11.png"
+          alt="logo"
         />
       </Link>
 
@@ -22,12 +23,12 @@ function Header() {
       </div>
 
       <div className="header__nav">
-        <link to='./login'>
+        <Link to='./login'>
         <div className="header__option">
           <span className="header__optionLineOne">Hello Guest</span>
           <span className="header__optionLineTwo">Sign In</span>
         </div>
-        </link>
+        </Link>
 
 
 

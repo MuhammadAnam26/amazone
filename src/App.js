@@ -5,17 +5,17 @@ import Home from "./Home";
 import { BrowserRouter as Router, Route, Routes, } from "react-router-dom";
 import Checkout from "./Checkout";
 import Login from "./Login";
-import { auth } from "./firebase";
+
 import {useStateValue} from "./StateProvider";
-import {useEffect, useState} from 'react';
+import { useEffect } from 'react'
+import { FBAuth } from "./firebase"
 
 function App() {
-  const [{}, dispatch] = useStateValue();
-
+  const [dispatch] = useStateValue();
   useEffect(() => {
     // will only run once when the app component loads...
 
-    auth.onAuthStateChanged((authUser) => {
+    FBAuth.onAuthStateChanged((authUser) => {
       console.log("THE USER IS >>> ", authUser);
 
       if (authUser) {
@@ -33,7 +33,7 @@ function App() {
         });
       }
     });
-  }, []);
+  }, [dispatch]);
  
 
   return (
@@ -41,13 +41,6 @@ function App() {
         <Header />
       <Login />
       <div className="app">
-        {/* <Route path ="/login" element={<Login />} > 
-        </Route>  */}
-        {/* <Route path="//ogin">
-          
-
-        </Route> */}
-
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/checkout" element={<Checkout />} />
