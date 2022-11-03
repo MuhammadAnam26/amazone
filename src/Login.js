@@ -2,35 +2,35 @@ import React, { useState } from 'react';
 import './Login.css';
 import { Link } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
-import { FBAuth } from './firebase'
+import { auth } from './firebase'
 
 
 function Login() {
-    const history = useNavigate();
+    const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const signIn = e => {
-        e.preventdefualt();
-       
-        FBAuth
+        e.preventDefault();
+
+        auth
             .signInWithEmailAndPassword(email, password)
-            .auth(auth => {
-                history.push('/')
+            .then(_auth => {
+                navigate('/')
             })
             .catch(error => alert(error.message))
     }
 
 
     const register = e => {
-        e.preventdefualt();
+        e.preventDefault();
 
-        FBAuth
-            .createUserwithEmailAndPassword(email, password)
-            .the((auth) => {
+        auth
+            .createUserWithEmailAndPassword(email, password)
+            .then((auth) => {
                 //     it successfully created a new user with  email and password.
-                if (auth) {
-                    history.push('/')
+                if(auth) {
+                    navigate('/')
                 }
             })
 
@@ -39,9 +39,6 @@ function Login() {
         //    Some fancy firebase register.........
 
     }
-
-
-
     return (
         <div className='login'>
             <Link to='/'>
@@ -55,13 +52,15 @@ function Login() {
 
                 <form>
                     <h5>E-mail</h5>
-                    <input type='text' value={email} onChange={e => setEmail(e.target.value)} />
+                    <input type='text'
+                        value={email} onChange={e => setEmail(e.target.value)} />
 
                     <h5>Password</h5>
-                    <input type='password' value={password} onChange={e => setPassword(e.target.value)} />
-
-                    <button onClick={signIn}
-                        type='submit' className='login__signInButton'>Sign In</button>
+                    <input type='password'
+                        value={password} onChange={e => setPassword(e.target.value)} />
+                    <button type='submit'
+                        onClick={signIn}
+                        className='login__signInButton'>Sign In</button>
                 </form>
 
                 <p>
